@@ -1,8 +1,7 @@
 import React from 'react';
 
 const Contact = (props) => {
-  const { contact } = props;
-
+  const { contact, onDeleteContact } = props;
 
   return (
     <li className='contact-list-item'>
@@ -18,7 +17,7 @@ const Contact = (props) => {
         <p>{contact.handle}</p>
       </div>
       <button
-        onClick={() => console.log('deletar')}
+        onClick={() => onDeleteContact(contact) }
         className='contact-remove'
       >
         Remove
