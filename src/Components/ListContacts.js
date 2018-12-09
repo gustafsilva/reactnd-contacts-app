@@ -20,13 +20,25 @@ class ListContacts extends Component {
     });
   }
 
-  render() {
+  renderShowingContacts(contacts) {
     const { onDeleteContact } = this.props;
 
-    const contacts = this.props.contacts.map((contact) => (
+    return contacts.map((contact) => (
       <Contact key={contact.id} contact={contact} onDeleteContact={onDeleteContact} />
     ));
+  }
 
+  render() {
+    const { query } = this.state;
+    const { contacts } = this.props;
+
+
+    const showingContacts = query === ''
+      ? contacts
+      : contacts.filter((c) => (
+        c.name.toLowerCase().includes(query.toLowerCase())
+      ))
+    
     return (
       <div className='list-contacts'>
         <div className='list-contacts-top'>
@@ -40,7 +52,7 @@ class ListContacts extends Component {
         </div>
 
         <ol className='contact-list'>
-          {contacts}
+          {this.renderShowingContacts(showingContacts)}
         </ol>
       </div>
     );
