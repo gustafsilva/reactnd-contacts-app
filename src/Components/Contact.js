@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Contact = (props) => {
   const { contact, onDeleteContact } = props;
@@ -24,6 +25,11 @@ const Contact = (props) => {
       </button>
     </li>
   );
+}
+
+Contact.propTypes = {
+  contact: PropTypes.object.isRequired,
+  onDeleteContact: PropTypes.func.isRequired
 }
 
 export default Contact;
