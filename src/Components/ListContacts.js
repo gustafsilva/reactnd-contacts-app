@@ -33,9 +33,11 @@ class ListContacts extends Component {
         c.name.toLowerCase().includes(query.toLowerCase()) // caso tenha algum filtro (query)
       ))
 
-    const contactsList = showingContacts.map((contact) => (
-      <Contact key={contact.id} contact={contact} onDeleteContact={onDeleteContact} />
-    ))
+    const contactsList = contacts.length > 0
+        ? showingContacts.map((contact) => (
+          <Contact key={contact.id} contact={contact} onDeleteContact={onDeleteContact} />
+        ))
+        : <p className='contact-details'>No registered contacts.</p>
     
     return (
       <div className='list-contacts'>
