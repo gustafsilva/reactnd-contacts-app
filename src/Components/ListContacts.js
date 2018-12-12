@@ -22,23 +22,29 @@ class ListContacts extends Component {
     })
   }
 
+  showingContacts(query, contacts) {
+    if (query === '') {
+      return contacts
+    } else {
+      return contacts.filter((c) => (
+        c.name.toLowerCase().includes(query.toLowerCase()) // caso tenha algum filtro (query)
+      ))
+    }
+  }
+
   render() {
     const { query } = this.state
     const { contacts, onDeleteContact } = this.props
-
-
-    const showingContacts = query === ''
-      ? contacts
-      : contacts.filter((c) => (
-        c.name.toLowerCase().includes(query.toLowerCase()) // caso tenha algum filtro (query)
-      ))
-
-    const contactsList = contacts.length > 0
-        ? showingContacts.map((contact) => (
-          <Contact key={contact.id} contact={contact} onDeleteContact={onDeleteContact} />
-        ))
-        : <p className='contact-details'>No registered contacts.</p>
     
+    let contactsList = <p className='contact-details'>No registered contacts.</p>
+    let contactsShow = this.showingContacts(query, contacts)
+
+    if(contacts.length > 0) {
+      contactsList = contactsShow.map((contact) => (
+      <Contact key={contact.id} contact={contact} onDeleteContact={onDeleteContact} />
+    ))
+    }
+
     return (
       <div className='list-contacts'>
         <div className='list-contacts-top'>
@@ -57,9 +63,9 @@ class ListContacts extends Component {
           </Link>
         </div>
 
-        { showingContacts.length !== contacts.length && (
+        { contactsList.length < contacts.length && (
           <InfoContacts
-            lenShowingContacts={showingContacts.length}
+            lenShowingContacts={contactsList.length}
             lenContacts={contacts.length}
             updateQuery={this.updateQuery}
           />
