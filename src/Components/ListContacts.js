@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
-import Contact from './Contact';
+import Contact from './Contact'
+import InfoContacts from './InfoContacts'
 
 
 class ListContacts extends Component {
@@ -18,31 +19,23 @@ class ListContacts extends Component {
   updateQuery = (newQuery) => {
     this.setState({
       query: newQuery
-    });
-  }
-
-  clearQuery = () => {
-    this.updateQuery('');
-  }
-
-  renderShowingContacts(contacts) {
-    const { onDeleteContact } = this.props;
-
-    return contacts.map((contact) => (
-      <Contact key={contact.id} contact={contact} onDeleteContact={onDeleteContact} />
-    ));
+    })
   }
 
   render() {
-    const { query } = this.state;
-    const { contacts } = this.props;
+    const { query } = this.state
+    const { contacts, onDeleteContact } = this.props
 
 
     const showingContacts = query === ''
       ? contacts
       : contacts.filter((c) => (
-        c.name.toLowerCase().includes(query.toLowerCase())
+        c.name.toLowerCase().includes(query.toLowerCase()) // caso tenha algum filtro (query)
       ))
+
+    const contactsList = showingContacts.map((contact) => (
+      <Contact key={contact.id} contact={contact} onDeleteContact={onDeleteContact} />
+    ))
     
     return (
       <div className='list-contacts'>
@@ -63,19 +56,20 @@ class ListContacts extends Component {
         </div>
 
         { showingContacts.length !== contacts.length && (
-          <div className='showing-contacts'>
-            <span>Now showing {showingContacts.length} of {contacts.length}</span>
-            <button onClick={this.clearQuery }>Show all</button>
-          </div>
+          <InfoContacts
+            lenShowingContacts={showingContacts.length}
+            lenContacts={contacts.length}
+            updateQuery={this.updateQuery}
+          />
         )}
 
         <ol className='contact-list'>
-          {this.renderShowingContacts(showingContacts)}
+          {contactsList}
         </ol>
       </div>
-    );
+    )
   }
 }
 
 
-export default ListContacts;
+export default ListContacts

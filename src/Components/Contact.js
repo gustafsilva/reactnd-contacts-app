@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const Contact = (props) => {
-  const { contact, onDeleteContact } = props;
+  const { contact, onDeleteContact } = props
 
   return (
     <li className='contact-list-item'>
@@ -24,7 +24,7 @@ const Contact = (props) => {
         Remove
       </button>
     </li>
-  );
+  )
 }
 
 Contact.propTypes = {
@@ -32,4 +32,4 @@ Contact.propTypes = {
   onDeleteContact: PropTypes.func.isRequired
 }
 
-export default Contact;
+export default Contact
